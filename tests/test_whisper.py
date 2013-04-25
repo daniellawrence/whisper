@@ -379,10 +379,6 @@ class CorruptWhisperFileDetection(TestCase):
         fh.seek(32)
         fh.write('BAD')
         fh.close()
-        # Read headerinfo
-        _info = info(self.test_path)
-        self.assertEqual(len(_info['archives']), 0)
-
         with self.assertRaises(CorruptWhisperFile):
             info(self.test_path)
 
@@ -395,9 +391,6 @@ class CorruptWhisperFileDetection(TestCase):
         fh.write('BAD')
         fh.close()
         # Read headerinfo
-        _info = info(self.test_path)
-        self.assertEqual(len(_info['archives']), 0)
-
         with self.assertRaises(CorruptWhisperFile):
             info(self.test_path)
 
@@ -419,9 +412,7 @@ class CorruptWhisperFileDetection(TestCase):
         fh.seek(40)
         fh.write('BAD')
         fh.close()
-        _info = info(self.test_path)
-        self.assertEqual(_info['archives'], [])
-        with self.assertRaises(TimestampNotCovered):
+        with self.assertRaises(CorruptWhisperFile):
             update(self.test_path, 1)
 
 class StoreAndRetive(TestCase):

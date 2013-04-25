@@ -237,6 +237,10 @@ def __readHeader(fh):
     }
     archives.append(archiveInfo)
 
+  if len(archives) == 0:
+    raise CorruptWhisperFile("No archives found", fh.name)
+  
+
   fh.seek(originalOffset)
   info = {
     'aggregationMethod' : aggregationTypeToMethod.get(aggregationType, 'average'),
