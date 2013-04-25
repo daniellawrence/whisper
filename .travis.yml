@@ -1,15 +1,16 @@
 language: python
 
 python:
-  - 2.5
-  - 2.6
   - 2.7
   - pypy
 
 install:
-    pip install .
+  - pip install -r requirements.txt --use-mirrors
+  - pip install .
 
+# Run all the tests under /tests/
 script:
+  - nosetests tests/*
   - bin/whisper-create.py --help
   - bin/whisper-dump.py --help
   - bin/whisper-fetch.py --help
